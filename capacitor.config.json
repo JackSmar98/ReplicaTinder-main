@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.app",
+  "appName": "replica-tinder-frontend",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
