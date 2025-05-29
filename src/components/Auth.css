@@ -1,0 +1,98 @@
+/* replica-tinder-frontend/src/components/Auth.css */
+.auth-container {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: white;
+  border-radius: 15px; /* Más redondeado */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más profunda */
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.auth-container h2 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 700;
+}
+
+.auth-form .auth-input {
+  width: calc(100% - 24px); /* Ajuste para padding y border */
+  padding: 14px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Más redondeado */
+  font-size: 1.1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-form .auth-input:focus {
+  border-color: #ff5864;
+  box-shadow: 0 0 0 3px rgba(255, 88, 100, 0.2);
+  outline: none;
+}
+
+.auth-form .auth-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff5864;
+  color: white;
+  border: none;
+  border-radius: 8px; /* Más redondeado */
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form .auth-button:hover:not(:disabled) {
+  background-color: #e04a55;
+  transform: translateY(-2px);
+}
+
+.auth-form .auth-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.toggle-auth {
+  background: none;
+  border: none;
+  color: #ff5864;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1em;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.toggle-auth:hover {
+  color: #e04a55;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .auth-container {
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 10px;
+  }
+
+  .auth-container h2 {
+    font-size: 1.8em;
+  }
+
+  .auth-form .auth-input {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  .auth-form .auth-button {
+    padding: 12px;
+    font-size: 1.1em;
+  }
+}

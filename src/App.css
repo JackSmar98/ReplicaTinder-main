@@ -1,0 +1,192 @@
+/* replica-tinder-frontend/src/App.css */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.App {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  margin: 20px 0;
+  padding: 0 20px; /* Ajuste de padding lateral para que el max-width funcione mejor */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.App-header {
+  background-color: #ff5864;
+  padding: 15px 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.logout-button {
+  background-color: white;
+  color: #ff5864;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.main-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  /* Eliminar align-items: center; aquí para que los hijos puedan tener su propio ancho */
+}
+
+.main-content h2, .main-content h3 {
+  color: #333;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center; /* Asegura que los títulos estén centrados */
+  width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ff5864, rgba(0, 0, 0, 0));
+  margin: 40px 0;
+  width: 100%; /* Ocupa todo el ancho */
+}
+
+/* Estilos de pestañas */
+.tab-navigation {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.tab-button {
+  background-color: transparent;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #777;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tab-button:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.tab-button.active {
+  background-color: #ff5864;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 88, 100, 0.3);
+  transform: translateY(-2px);
+}
+
+.tab-button.active:hover {
+  background-color: #e04a55;
+}
+
+.tab-content {
+  padding: 20px 0;
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Mantener centrado horizontal para el contenido de la pestaña */
+  justify-content: flex-start; /* Alinea el contenido al inicio verticalmente */
+}
+
+/* Ajustes responsivos para las pestañas */
+@media (max-width: 768px) {
+  .App-header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .App-header h1 {
+    font-size: 1.5em;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .tab-navigation {
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 5px;
+  }
+
+  .tab-button {
+    padding: 10px 15px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .App-header {
+    border-radius: 8px;
+  }
+
+  .main-content {
+    border-radius: 8px;
+  }
+}
