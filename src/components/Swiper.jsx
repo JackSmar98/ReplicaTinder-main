@@ -72,7 +72,7 @@ export default function Swiper({ session }) {
 
       const result = data[0]; // La función RPC devuelve un array de objetos
       if (result && result.is_new_match) {
-        alert(`¡Es un MATCH con ${swipedProfile.username}!`);
+        alert(`¡Es un MATCH con ${swipedProfile.username}! 💕`);
         // Aquí podrías agregar lógica para actualizar la lista de matches o mostrar una notificación
       } else if (isLike && !result.is_new_match) {
         console.log(`Like a ${swipedProfile.username}, pero no hay match aún.`);
@@ -89,33 +89,50 @@ export default function Swiper({ session }) {
     }
   };
 
+  // Función para generar avatar con fallback
+  const getAvatarSrc = (profile) => {
+    if (profile.avatar_url && profile.avatar_url.trim()) {
+      return profile.avatar_url;
+    }
+    const initial = profile.username ? profile.username.charAt(0).toUpperCase() : '?';
+    return `https://placehold.co/350x350/FF5864/FFFFFF?text=${initial}`;
+  };
+
   const currentProfile = profiles[currentProfileIndex];
 
   if (loading) return <p className="loading-message">Cargando perfiles...</p>;
   if (error) return <p className="error-message">{error}</p>;
-  if (!currentProfile) return <p className="no-profiles-message">No hay más perfiles para mostrar por ahora. ¡Vuelve más tarde!</p>;
+  if (!currentProfile) return <p className="no-profiles-message">¡No hay más perfiles para mostrar por ahora! 🎉<br/>Vuelve más tarde para descubrir nuevas personas.</p>;
 
   return (
     <div className="swiper-card">
       {/* Muestra la imagen del avatar si existe, si no, un placeholder */}
       <img
-        src={currentProfile.avatar_url || `https://placehold.co/320x320/FF5864/FFFFFF?text=${currentProfile.username.charAt(0).toUpperCase()}`}
+        src={getAvatarSrc(currentProfile)}
         alt={currentProfile.username}
         className="profile-avatar"
-        onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/320x320/FF5864/FFFFFF?text=${currentProfile.username.charAt(0).toUpperCase()}`; }}
+        onError={(e) => { 
+          e.target.onerror = null; 
+          const initial = currentProfile.username ? currentProfile.username.charAt(0).toUpperCase() : '?';
+          e.target.src = `https://placehold.co/350x350/FF5864/FFFFFF?text=${initial}`; 
+        }}
       />
       <div className="profile-info">
         <h2>{currentProfile.username}, {currentProfile.age}</h2>
-        <p>{currentProfile.bio}</p>
-        <p>Género: {currentProfile.gender} | Buscando: {currentProfile.looking_for}</p>
+        {currentProfile.bio && (
+          <p className="profile-bio">"{currentProfile.bio}"</p>
+        )}
+        <div className="profile-details">
+          Género: {currentProfile.gender || 'No especificado'} | Buscando: {currentProfile.looking_for || 'Cualquiera'}
+        </div>
       </div>
       <div className="swiper-actions">
         {/* Botón de dislike */}
-        <button className="dislike-button" onClick={() => handleSwipe(false)}>
+        <button className="dislike-button" onClick={() => handleSwipe(false)} title="No me gusta">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
         {/* Botón de like */}
-        <button className="like-button" onClick={() => handleSwipe(true)}>
+        <button className="like-button" onClick={() => handleSwipe(true)} title="Me gusta">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
         </button>
       </div>

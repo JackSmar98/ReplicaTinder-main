@@ -1,124 +1,304 @@
-/* replica-tinder-frontend/src/components/Account.css */
-.profile-form-container {
-  max-width: 650px;
+/* Account.css - Diseño moderno y centrado */
+.profile-container {
+  max-width: 600px;
   margin: 20px auto;
-  padding: 35px;
-  background-color: #fcfcfc;
-  border-radius: 15px; /* Más redondeado */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  text-align: left;
-  border: 1px solid #eee;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.profile-form-container h3 {
+/* Header del perfil con avatar grande */
+.profile-header {
   text-align: center;
+  padding: 20px 15px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.profile-avatar-section {
+  position: relative;
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.profile-avatar-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  border: 4px solid #FF5864;
+  box-shadow: 0 6px 20px rgba(255, 88, 100, 0.3);
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.profile-avatar-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 88, 100, 0.4);
+}
+
+.avatar-overlay {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #FF5864;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.avatar-overlay:hover {
+  transform: scale(1.1);
+  background: #E8495A;
+}
+
+.profile-title {
+  margin: 0 0 8px 0;
   color: #333;
-  margin-bottom: 30px;
   font-size: 1.8em;
   font-weight: 700;
+  background: linear-gradient(45deg, #FF5864, #667eea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.form-group {
+.profile-email {
+  color: #666;
+  font-size: 0.95em;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Formulario en dos columnas */
+.profile-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
   margin-bottom: 20px;
 }
 
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  position: relative;
+}
+
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
-  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-weight: 700; /* ← Más bold */
+  color: #222; /* ← Más oscuro */
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* ← Sombra sutil */
 }
 
-.form-input,
-.form-textarea,
-.form-select {
-  width: calc(100% - 24px); /* Ajuste para padding y border */
-  padding: 12px 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px; /* Más redondeado */
-  font-size: 1em;
+.label-icon {
+  font-size: 16px;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
   box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  color: #333; /* ← Color del texto */
+  font-weight: 500; /* ← Peso de fuente */
 }
 
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  border-color: #ff5864;
-  box-shadow: 0 0 0 3px rgba(255, 88, 100, 0.2);
+.form-input:focus, .form-textarea:focus, .form-select:focus {
   outline: none;
+  border-color: #FF5864;
+  box-shadow: 0 0 0 3px rgba(255, 88, 100, 0.1);
+  transform: translateY(-2px);
+  color: #222; /* ← Texto más oscuro al hacer focus */
+  background: rgba(255, 255, 255, 0.95); /* ← Fondo más opaco al hacer focus */
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #999;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Estados de los inputs */
+.form-input:not(:placeholder-shown),
+.form-textarea:not(:placeholder-shown),
+.form-select:not([value=""]) {
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  font-weight: 600;
+  border-color: rgba(255, 88, 100, 0.3);
+}
+
+/* Mejor contraste para texto deshabilitado */
+.form-input:disabled {
+  background: #f8f9fa;
+  color: #495057;
+  border-color: #dee2e6;
+}
+
+/* Estilos específicos para select */
+.form-select {
+  color: #333;
+  font-weight: 500;
+}
+
+.form-select option {
+  color: #333;
+  background: white;
+  font-weight: 400;
 }
 
 .form-textarea {
-  resize: vertical; /* Permite redimensionar verticalmente */
+  resize: vertical;
   min-height: 80px;
+  font-family: inherit;
 }
 
-.disabled-input {
-  background-color: #e9e9e9;
-  cursor: not-allowed;
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
 }
 
-.submit-button {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  background-color: #ff5864;
+/* Botón de actualizar */
+.form-actions {
+  text-align: center;
+}
+
+.update-button {
+  background: linear-gradient(45deg, #FF5864, #FF7B82);
   color: white;
   border: none;
-  border-radius: 8px; /* Más redondeado */
-  font-size: 1.2em;
-  font-weight: bold;
+  padding: 14px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 88, 100, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  justify-content: center;
 }
 
-.submit-button:hover:not(:disabled) {
-  background-color: #e04a55;
-  transform: translateY(-2px);
+.update-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 88, 100, 0.4);
+  background: linear-gradient(45deg, #E8495A, #FF5864);
 }
 
-.submit-button:disabled {
-  background-color: #cccccc;
+.update-button:active {
+  transform: translateY(-1px);
+}
+
+.update-button:disabled {
+  background: #ccc;
   cursor: not-allowed;
+  transform: none;
   box-shadow: none;
 }
 
-/* Responsive adjustments */
+/* Spinner de carga */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .profile-form-container {
-    padding: 25px;
+  .profile-container {
+    margin: 10px;
+    padding: 12px;
+    border-radius: 15px;
+  }
+  
+  .profile-form {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .profile-avatar-img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .profile-title {
+    font-size: 1.5em;
+  }
+  
+  .form-input, .form-textarea, .form-select {
+    padding: 10px 12px;
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+  
+  .update-button {
+    padding: 12px 25px;
+    font-size: 14px;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .profile-form-container {
-    margin: 10px auto;
-    padding: 15px;
-    border-radius: 10px;
+  .profile-header {
+    padding: 15px 12px;
   }
-
-  .profile-form-container h3 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+  
+  .profile-avatar-img {
+    width: 70px;
+    height: 70px;
   }
-
-  .form-group label {
-    font-size: 1em;
-  }
-
-  .form-input,
-  .form-textarea,
-  .form-select {
-    padding: 10px;
-    font-size: 0.9em;
-  }
-
-  .submit-button {
-    padding: 12px;
-    font-size: 1.1em;
+  
+  .avatar-overlay {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
   }
 }

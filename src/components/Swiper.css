@@ -17,12 +17,20 @@
   width: 100%;
   height: 350px; /* Cuadrado para avatar */
   object-fit: cover;
+  object-position: center center; /* ← Centra mejor la imagen */
   display: block;
   border-bottom: 1px solid #f0f0f0;
+  transition: transform 0.3s ease; /* ← Efecto suave */
+}
+
+/* Efecto hover en la imagen */
+.swiper-card:hover .profile-avatar {
+  transform: scale(1.02);
 }
 
 .profile-info {
   padding: 20px 15px;
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%); /* ← Gradiente sutil */
 }
 
 .swiper-card h2 {
@@ -30,6 +38,7 @@
   color: #333;
   font-size: 2em;
   font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* ← Sombra sutil en texto */
 }
 
 .swiper-card p {
@@ -38,6 +47,25 @@
   padding: 0 10px;
   margin-bottom: 15px;
   line-height: 1.4;
+}
+
+/* Estilo especial para la biografía */
+.profile-bio {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 10px;
+  min-height: 20px; /* Para mantener altura consistente */
+}
+
+/* Estilo para la información de género */
+.profile-details {
+  font-size: 0.95em;
+  color: #777;
+  background-color: rgba(255, 88, 100, 0.1);
+  padding: 8px 12px;
+  border-radius: 15px;
+  display: inline-block;
+  margin-top: 5px;
 }
 
 .swiper-actions {
@@ -64,6 +92,31 @@
   justify-content: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para los botones */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto ripple en los botones */
+.dislike-button::before,
+.like-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
+  transform: translate(-50%, -50%);
+}
+
+.dislike-button:active::before,
+.like-button:active::before {
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
 }
 
 .dislike-button {
@@ -80,22 +133,52 @@
   background-color: #ff5864;
   color: white;
   transform: scale(1.05); /* Efecto de escala al pasar el ratón */
+  box-shadow: 0 6px 20px rgba(255, 88, 100, 0.4);
 }
 
 .like-button:hover {
   background-color: #1abc9c;
   color: white;
   transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(26, 188, 156, 0.4);
 }
 
+/* Estados de carga y mensajes */
 .loading-message, .error-message, .no-profiles-message {
-  padding: 20px;
+  padding: 40px 20px;
   font-size: 1.2em;
   color: #555;
+  text-align: center;
+  background: white;
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .error-message {
   color: #d9534f; /* Rojo para errores */
+  background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+}
+
+.no-profiles-message {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #0369a1;
+}
+
+/* Animación de entrada para las tarjetas */
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.swiper-card {
+  animation: cardEntrance 0.5s ease-out;
 }
 
 /* Responsive adjustments */
@@ -116,6 +199,11 @@
 
   .swiper-card p {
     font-size: 1em;
+  }
+
+  .profile-details {
+    font-size: 0.9em;
+    padding: 6px 10px;
   }
 
   .swiper-actions {

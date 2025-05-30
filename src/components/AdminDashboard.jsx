@@ -129,6 +129,15 @@ export default function AdminDashboard({ session }) {
     }
   };
 
+  // Función para generar avatar placeholder
+  const getAvatarSrc = (profile) => {
+    if (profile.avatar_url && profile.avatar_url.trim()) {
+      return profile.avatar_url;
+    }
+    const initial = profile.username ? profile.username.charAt(0).toUpperCase() : 
+                   profile.email ? profile.email.charAt(0).toUpperCase() : '?';
+    return `https://placehold.co/60x60/FF5864/FFFFFF?text=${initial}`;
+  };
 
   if (loading || currentUserRole !== 'admin') {
     return <div className="loading-app">Cargando panel de administrador...</div>;
@@ -140,76 +149,108 @@ export default function AdminDashboard({ session }) {
       {profiles.length === 0 ? (
         <p>No hay perfiles para mostrar.</p>
       ) : (
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Edad</th>
-              <th>Género</th>
-              <th>Buscando</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {profiles.map(profile => (
-              <tr key={profile.id}>
-                <td>
-                  <input
-                    type="text"
-                    value={profile.username || ''}
-                    onChange={(e) => handleProfileUpdateChange(profile.id, 'username', e.target.value)}
-                  />
-                </td>
-                <td>{profile.email}</td> {/* El email generalmente no se edita directamente aquí */}
-                <td>
-                  <input
-                    type="number"
-                    value={profile.age || ''}
-                    onChange={(e) => handleProfileUpdateChange(profile.id, 'age', parseInt(e.target.value) || null)}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    value={profile.gender || ''}
-                    onChange={(e) => handleProfileUpdateChange(profile.id, 'gender', e.target.value)}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    value={profile.looking_for || ''}
-                    onChange={(e) => handleProfileUpdateChange(profile.id, 'looking_for', e.target.value)}
-                  />
-                </td>
-                 <td>
-                  <select 
-                    value={profile.role || 'user'}
-                    onChange={(e) => handleProfileUpdateChange(profile.id, 'role', e.target.value)}
-                    disabled={profile.id === session.user.id} // Opcional: no permitir que el admin se quite el rol a sí mismo
-                  >
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td>
-                  <button onClick={() => saveProfileChanges(profile.id)} className="admin-button-save">
-                    Guardar
-                  </button>
-                  <button 
-                    onClick={() => deleteUserProfile(profile.id, profile.username)} 
-                    className="admin-button-delete"
-                    disabled={profile.id === session.user.id} // No permitir que el admin se elimine a sí mismo desde aquí
-                  >
-                    Eliminar Perfil
-                  </button>
-                </td>
+        <div className="admin-table-container">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Buscando</th>
+                <th>Rol</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {profiles.map(profile => (
+                <tr key={profile.id}>
+                  <td>
+                    <img
+                      src={getAvatarSrc(profile)}
+                      alt={profile.username || 'Usuario'}
+                      className="admin-avatar"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        const initial = profile.username ? profile.username.charAt(0).toUpperCase() : 
+                                       profile.email ? profile.email.charAt(0).toUpperCase() : '?';
+                        e.target.src = `https://placehold.co/60x60/FF5864/FFFFFF?text=${initial}`;
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={profile.username || ''}
+                      onChange={(e) => handleProfileUpdateChange(profile.id, 'username', e.target.value)}
+                      className="admin-input"
+                    />
+                  </td>
+                  <td className="admin-email">{profile.email}</td> {/* El email generalmente no se edita directamente aquí */}
+                  <td>
+                    <input
+                      type="number"
+                      value={profile.age || ''}
+                      onChange={(e) => handleProfileUpdateChange(profile.id, 'age', parseInt(e.target.value) || null)}
+                      className="admin-input admin-input-small"
+                    />
+                  </td>
+                  <td>
+                    <select
+                      value={profile.gender || ''}
+                      onChange={(e) => handleProfileUpdateChange(profile.id, 'gender', e.target.value)}
+                      className="admin-select"
+                    >
+                      <option value="">-</option>
+                      <option value="Male">M</option>
+                      <option value="Female">F</option>
+                      <option value="Non-binary">NB</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select
+                      value={profile.looking_for || ''}
+                      onChange={(e) => handleProfileUpdateChange(profile.id, 'looking_for', e.target.value)}
+                      className="admin-select"
+                    >
+                      <option value="">-</option>
+                      <option value="Male">M</option>
+                      <option value="Female">F</option>
+                      <option value="Non-binary">NB</option>
+                      <option value="Anyone">Todos</option>
+                    </select>
+                  </td>
+                   <td>
+                    <select 
+                      value={profile.role || 'user'}
+                      onChange={(e) => handleProfileUpdateChange(profile.id, 'role', e.target.value)}
+                      disabled={profile.id === session.user.id} // Opcional: no permitir que el admin se quite el rol a sí mismo
+                      className="admin-select"
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div className="admin-actions">
+                      <button onClick={() => saveProfileChanges(profile.id)} className="admin-button-save">
+                        💾
+                      </button>
+                      <button 
+                        onClick={() => deleteUserProfile(profile.id, profile.username)} 
+                        className="admin-button-delete"
+                        disabled={profile.id === session.user.id} // No permitir que el admin se elimine a sí mismo desde aquí
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

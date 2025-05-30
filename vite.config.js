@@ -1,11 +1,28 @@
-    // vite.config.js
-    import { defineConfig } from 'vite'
-    import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-    // https://vitejs.dev/config/
-    export default defineConfig({
-      plugins: [react()],
-      // Las configuraciones de esbuild y optimizeDeps se eliminan
-      // ya que @vitejs/plugin-react debería manejar el JSX por defecto.
-    })
-    
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          supabase: ['@supabase/supabase-js']
+        }
+      }
+    }
+  },
+  server: {
+    host: true,
+    port: 5173
+  },
+  // Configuración específica para Capacitor
+  define: {
+    global: 'globalThis',
+  }
+})

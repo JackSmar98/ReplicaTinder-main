@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">replica-tinder-frontend</string>
-    <string name="title_activity_main">replica-tinder-frontend</string>
-    <string name="package_name">com.example.app</string>
-    <string name="custom_url_scheme">com.example.app</string>
+    <string name="app_name">Replica Tinder</string>
+    <string name="title_activity_main">Replica Tinder</string>
+    <string name="package_name">com.replicatinder.app</string>
+    <string name="custom_url_scheme">com.replicatinder.app</string>
 </resources>

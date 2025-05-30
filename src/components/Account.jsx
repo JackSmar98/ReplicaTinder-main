@@ -57,6 +57,7 @@ export default function Account({ session }) {
 
       const updates = {
         id: user.id, // El ID del perfil es el mismo que el ID del usuario de autenticación
+        email: user.email, // Incluir el email
         username,
         bio,
         age,
@@ -81,84 +82,168 @@ export default function Account({ session }) {
     }
   }
 
+  // Generar placeholder si no hay avatar
+  const getAvatarSrc = () => {
+    if (avatarUrl && avatarUrl.trim()) {
+      return avatarUrl;
+    }
+    const initial = username ? username.charAt(0).toUpperCase() : session.user.email.charAt(0).toUpperCase();
+    return `https://placehold.co/200x200/FF5864/FFFFFF?text=${initial}`;
+  };
+
   return (
-    <div className="profile-form-container">
-      <h3>Tu Perfil</h3>
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        {/* El email del usuario no se puede cambiar desde aquí */}
-        <input id="email" type="text" value={session.user.email} disabled className="form-input disabled-input" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="username">Nombre de Usuario</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-          className="form-input"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="bio">Biografía</label>
-        <textarea
-          id="bio"
-          value={bio || ''}
-          onChange={(e) => setBio(e.target.value)}
-          className="form-textarea"
-        ></textarea>
-      </div>
-      <div className="form-group">
-        <label htmlFor="age">Edad</label>
-        <input
-          id="age"
-          type="number"
-          value={age || ''}
-          onChange={(e) => setAge(parseInt(e.target.value))}
-          className="form-input"
-          min="18" // Edad mínima razonable para una app como Tinder
-          max="99"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="gender">Género</label>
-        <select id="gender" value={gender || ''} onChange={(e) => setGender(e.target.value)} className="form-select">
-          <option value="">Selecciona</option>
-          <option value="Male">Masculino</option>
-          <option value="Female">Femenino</option>
-          <option value="Non-binary">No binario</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="looking_for">Buscando</label>
-        <select id="looking_for" value={lookingFor || ''} onChange={(e) => setLookingFor(e.target.value)} className="form-select">
-          <option value="">Selecciona</option>
-          <option value="Male">Masculino</option>
-          <option value="Female">Femenino</option>
-          <option value="Non-binary">No binario</option>
-          <option value="Anyone">Cualquiera</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="avatar_url">URL de Avatar</label>
-        <input
-          id="avatar_url"
-          type="text"
-          value={avatarUrl || ''}
-          onChange={(e) => setAvatarUrl(e.target.value)}
-          className="form-input"
-          placeholder="Ej: https://placehold.co/150x150"
-        />
+    <div className="profile-container">
+      {/* Header del perfil */}
+      <div className="profile-header">
+        <div className="profile-avatar-section">
+          <div className="avatar-container">
+            <img
+              src={getAvatarSrc()}
+              alt="Tu foto de perfil"
+              className="profile-avatar-img"
+              onError={(e) => {
+                e.target.onerror = null;
+                const initial = username ? username.charAt(0).toUpperCase() : session.user.email.charAt(0).toUpperCase();
+                e.target.src = `https://placehold.co/200x200/FF5864/FFFFFF?text=${initial}`;
+              }}
+            />
+            <div className="avatar-overlay">
+              <span>📸</span>
+            </div>
+          </div>
+          <h2 className="profile-title">Mi Perfil</h2>
+          <p className="profile-email">{session.user.email}</p>
+        </div>
       </div>
 
-      <div>
+      {/* Formulario en dos columnas */}
+      <div className="profile-form">
+        {/* Columna izquierda */}
+        <div className="form-column">
+          <div className="form-group">
+            <label htmlFor="username">
+              <span className="label-icon">👤</span>
+              Nombre de Usuario
+            </label>
+            <input
+              id="username"
+              type="text"
+              value={username || ''}
+              onChange={(e) => setUsername(e.target.value)}
+              className="form-input"
+              placeholder="¿Cómo te llamas?"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="age">
+              <span className="label-icon">🎂</span>
+              Edad
+            </label>
+            <input
+              id="age"
+              type="number"
+              value={age || ''}
+              onChange={(e) => setAge(parseInt(e.target.value))}
+              className="form-input"
+              placeholder="Tu edad"
+              min="18"
+              max="99"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="gender">
+              <span className="label-icon">⚧</span>
+              Género
+            </label>
+            <select 
+              id="gender" 
+              value={gender || ''} 
+              onChange={(e) => setGender(e.target.value)} 
+              className="form-select"
+            >
+              <option value="">Selecciona tu género</option>
+              <option value="Male">Masculino</option>
+              <option value="Female">Femenino</option>
+              <option value="Non-binary">No binario</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Columna derecha */}
+        <div className="form-column">
+          <div className="form-group">
+            <label htmlFor="looking_for">
+              <span className="label-icon">💕</span>
+              Buscando
+            </label>
+            <select 
+              id="looking_for" 
+              value={lookingFor || ''} 
+              onChange={(e) => setLookingFor(e.target.value)} 
+              className="form-select"
+            >
+              <option value="">¿Qué buscas?</option>
+              <option value="Male">Masculino</option>
+              <option value="Female">Femenino</option>
+              <option value="Non-binary">No binario</option>
+              <option value="Anyone">Cualquier persona</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="avatar_url">
+              <span className="label-icon">🖼️</span>
+              URL de tu foto
+            </label>
+            <input
+              id="avatar_url"
+              type="url"
+              value={avatarUrl || ''}
+              onChange={(e) => setAvatarUrl(e.target.value)}
+              className="form-input"
+              placeholder="https://ejemplo.com/tu-foto.jpg"
+            />
+          </div>
+
+          {/* Biografía ocupa más espacio */}
+          <div className="form-group">
+            <label htmlFor="bio">
+              <span className="label-icon">✍️</span>
+              Cuéntanos sobre ti
+            </label>
+            <textarea
+              id="bio"
+              value={bio || ''}
+              onChange={(e) => setBio(e.target.value)}
+              className="form-textarea"
+              placeholder="Escribe algo interesante sobre ti..."
+              rows="4"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      {/* Botón de actualizar centrado */}
+      <div className="form-actions">
         <button
           onClick={() => updateProfile({ username, bio, age, gender, lookingFor, avatarUrl })}
           disabled={loading}
-          className="submit-button"
+          className="update-button"
         >
-          {loading ? 'Guardando...' : 'Actualizar perfil'}
+          {loading ? (
+            <>
+              <span className="loading-spinner"></span>
+              Guardando...
+            </>
+          ) : (
+            <>
+              <span>💾</span>
+              Actualizar perfil
+            </>
+          )}
         </button>
       </div>
     </div>

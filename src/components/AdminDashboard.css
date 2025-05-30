@@ -1,98 +1,160 @@
-/* src/components/AdminDashboard.css */
+/* AdminDashboard.css */
 .admin-dashboard {
   padding: 20px;
   max-width: 1200px;
-  margin: 20px auto;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
 .admin-dashboard h2 {
   text-align: center;
   color: #333;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+}
+
+.admin-table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  background: white;
+  min-width: 800px;
 }
 
 .admin-table th,
 .admin-table td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
+  padding: 12px 8px;
+  border-bottom: 1px solid #e1e5e9;
   text-align: left;
   vertical-align: middle;
 }
 
 .admin-table th {
-  background-color: #e9ecef;
-  color: #495057;
+  background-color: #FF5864;
+  color: white;
   font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-.admin-table tr:nth-child(even) {
+.admin-table tbody tr:hover {
   background-color: #f8f9fa;
 }
 
-.admin-table tr:hover {
-  background-color: #e2e6ea;
+/* Avatar en admin */
+.admin-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center center;
+  border: 2px solid #FF5864;
+  display: block;
+  margin: 0 auto;
 }
 
-.admin-table input[type="text"],
-.admin-table input[type="number"],
-.admin-table input[type="email"], /* Aunque el email no se edita */
-.admin-table select {
-  width: calc(100% - 16px); /* Ajuste para padding */
+/* Inputs y selects del admin */
+.admin-input,
+.admin-select {
+  width: 100%;
   padding: 6px 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box;
+  font-size: 14px;
 }
 
-.admin-table input:focus,
-.admin-table select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+.admin-input-small {
+  width: 60px;
+}
+
+.admin-input:focus,
+.admin-select:focus {
   outline: none;
+  border-color: #FF5864;
+}
+
+.admin-email {
+  font-size: 12px;
+  color: #666;
+  max-width: 120px;
+  word-break: break-word;
+}
+
+/* Botones de acción */
+.admin-actions {
+  display: flex;
+  gap: 5px;
 }
 
 .admin-button-save,
 .admin-button-delete {
-  padding: 6px 12px;
-  margin-right: 8px;
+  padding: 6px 8px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.2s ease;
+  font-size: 16px;
+  transition: transform 0.2s ease;
 }
 
 .admin-button-save {
   background-color: #28a745;
   color: white;
 }
+
 .admin-button-save:hover {
   background-color: #218838;
+  transform: scale(1.05);
 }
 
 .admin-button-delete {
   background-color: #dc3545;
   color: white;
 }
-.admin-button-delete:hover {
+
+.admin-button-delete:hover:not(:disabled) {
   background-color: #c82333;
+  transform: scale(1.05);
 }
+
 .admin-button-delete:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
+/* Loading */
 .loading-app {
-  text-align: center;
-  padding: 40px;
-  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 10px;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+  
+  .admin-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .admin-input,
+  .admin-select {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
 }
